@@ -88,5 +88,87 @@ Future Idea: To overcome these challenges, techniques such as rotating proxies a
 - **pip** : The Python Package Index (PyPi) used to install libraries.
 - **Python IDE**: I will be using VSCode
 
-## 
+- Create a python-scrapper.py file in the directory.
 
+## Inspecting the Target Website: 
+
+First analyze the target website to study the site structure and understand how to scrape data from it. (sounds tedious but is crucial)
+
+- For this project, I will be scraping the website: [scrapeme](https://scrapeme.live/shop/)
+
+- Interact/ Browse the Website like a normal user and study how the site reacts.
+  - Explore different list pages 
+  - Try Search Feature
+  - Open product pages
+  - **Focus how the URL changes.**
+  
+### Analyze the URL Structure: -
+A web server returns an HTML document based on the request URL, each one is associated with a specific page. Typically, URLs of same-type pages share a similar format overall.
+
+*Ex*: - https://scrapeme.live/shop/Raticate/
+
+- This URL can be divided into two parts 
+1. **Base URL**: The path to the shop section of the website.
+2. **Specific Page Location**: The path to the specific product. *The URL may end with .html, .php, or have no extension at all.*
+   
+- The URL can also contain additional information: - 
+  - **Path Parameters:** These are used to capture specific values in a RESTful approach 
+  Example: In https://www.example.com/users/14, 14 is the path param.
+  - **Query parameters:** Added to the end of a URL after a question mark (?). They generally encode filter values to send to the server when performing a search.
+  Example: In https://www.example.com/search?search=blabla&sort=newest, search=blabla and sort=newest are the query parameters.
+
+Any query parameter string consists of :-
+`?`: Marks the beginning. and A list of `key=value` parameters separated by `&`
+
+**Analysis Result**: All products listed on the website have the same base URL and only the latter part of the URL (string) changes for each specific product.
+
+For Example: https://scrapeme.live/page/3/?s=bla
+
+This URL corresponds to the third page of search result for "bla" query. where *3 is the path parameter* and *bla is the value of s key/parameter*
+
+Thus, the above  URL will instruct the server to run a paginated search query and get all that contain the string bla and return only the results of page number three.
+
+### Use Developer Tools to Inspect the Site: - Inspecting the HTML Code
+
+Every modern web browser includes a powerful suite of developer tools. These tools do a range of things, from inspecting currently-loaded HTML, CSS and JavaScript to showing which assets the page has requested and how long they took to load.
+
+Developer Tools let us inspect the structure of **Document Object Model (DOM)** of a web page. (Open the `Elements` tab) This helps in deeper insight into website's structure. 
+
+#### DOM vs HTML
+- The HTML code represents the content of a web page document written by a developer.
+
+- The DOM is a dynamic, in-memory representation of HTML code created by the browser.
+  
+## Download HTML Pages: - [Using `request` library]
+
+- To scrape data from any website, first we need to download the HTML document.
+
+- Intall request library using pip
+```py
+pip install requests
+```
+- Now, using the below code: -
+
+```py
+import requests
+
+#download the HTML document with an HTTP GET request
+response = requests.get("https://scrapme.live/shop/")
+
+print(response.text)
+```
+- The above code imports the dependencies.
+- Then uses, requests get() function to perform **HTTP GET request** to the target HTML Page URL
+- It returns the python representation of the response containing the HTML document.
+- Using the `print(response.text)` statement, we get the HTML code of the page.
+- The GET request to the server may fail for several reasons. The server may be temporarily unavailable, the URL may be wrong, or your IP might have been blocked. 
+
+**Error Handling Code: -**
+```py 
+# If response is 2xx (i.e. 200 OK), the request was successful. 
+if response.ok:
+    #scraping Logic
+else:
+    # in case of 4xx or 5xx response, log the error response
+print(response) #This line prints the HTML content of the webpage to the console    
+```
