@@ -11,7 +11,7 @@ pokemon_products = []
 for page in range(1, 48):  # List of page numbers
 
     # download the HTML document with an HTTP GET request
-    response = requests.get(f"https://scrapeme.live/shop/page/{page}/") 
+    response = requests.get(f"https://scrapeme  .live/shop/page/{page}/") 
     
 
     # Error-Handling Code   
