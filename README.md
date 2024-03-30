@@ -1,4 +1,4 @@
-# Python Web Crawler/Scraper Project for Semester VI Python Workshop (14-02-2024) - Samar Singla  
+# Python Web Crawler/Scraper Project for Semester VI Python Workshop - Samar Singla  
 ## This is a guide/tutorial and my experience in building this project
 
 ## Table of Contents
